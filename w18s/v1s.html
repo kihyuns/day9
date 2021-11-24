@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    .row {
+        width: 100vw;
+    }
+
+    .header {
+        background-color: yellow;
+        height: 10vh;
+    }
+
+    .main {
+        background-color: coral;
+        height: 80vh;
+        display: flex;
+
+    }
+
+
+    .main .menuDiv {
+        background-color: greenyellow;
+        width: 50vw;
+        overflow: auto;
+        scrollbar-width: none;
+
+
+    }
+
+    .menuList {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        flex-wrap: wrap;
+    }
+
+    .mdiv {
+        width: 130px;
+        height: 200px;
+        border: 1px solid skyblue;
+        margin: 20px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    .mdiv img {
+        width: 100px;
+        height: 100px;
+    }
+    .pop {
+        background-color: white;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        opacity: 1;
+        display : flex;
+        justify-content: center;
+        align-items: center;
+        transform: scale(0.5);
+
+    }
+
+    .pop img {
+
+        /*width :300px;*/
+        /*height : 300px;*/
+
+    }
+
+    .show {
+        z-index: 1000;
+    }
+
+    .hide {
+        z-index: -1000;
+    }
+
+</style>
+
+<div class="pop hide">
+    <img src="img/c02.jpg">
+    <h3>ADD CART</h3>
+</div>
+
+<div class="container">
+    <div class="row header">
+
+    </div>
+    <div class="row main">
+        <div class="menuDiv">
+            <h1>MENU</h1>
+
+            <ul class="menuList">
+
+            </ul>
+
+        </div>
+        <div class="orderDiv">
+            <h1>ORDER</h1>
+            <ul class="orderList">
+
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    const menus = [
+        {name:'아메리카노', price:4000, picture:'img/c01.jpg'},
+        {name:'카라멜마끼아또', price:4500, picture:'img/c02.jpg'},
+        {name:'카푸치노', price:4800, picture:'img/c03.jpg'},
+        {name:'카페라떼', price:4200, picture:'img/c04.jpg'},
+        {name:'에스프레소', price:4000, picture:'img/c05.jpg'},
+        {name:'자몽주스', price:4000, picture:'img/j01.jpg'},
+        {name:'오렌지주스', price:4500, picture:'img/j02.jpg'},
+        {name:'딸기주스', price:4800, picture:'img/j03.jpg'},
+        {name:'망고주스', price:4200, picture:'img/j04.jpg'},
+        {name:'토마토주스', price:4000, picture:'img/j05.jpg'},
+        {name:'가나슈케이크', price:5000, picture:'img/k01.jpg'},
+        {name:'클라우드케이크', price:4500, picture:'img/k02.jpg'},
+        {name:'블루베리케이크', price:6500, picture:'img/k03.jpg'},
+        {name:'초콜릿크레이프', price:5500, picture:'img/k04.jpg'},
+        {name:'티라미수롤', price:4800, picture:'img/k05.jpg'},
+    ]
+    const orders = []
+
+    const menuList = document.querySelector(".menuList")
+    let str =''
+    for (let i = 0; i < menus.length; i++) {
+        const menu = menus[i]
+        str += `<li data-idx = '${i}'>
+                    <div>
+                        <img src="${menu.picture}">
+                        ${menu.name}
+                        ${menu.price}
+                    </div>
+                </li>`
+    }
+
+    menuList.innerHTML = str
+
+    const orderList = document.querySelector(".orderList")
+
+    let str2 =''
+
+    let totalPrice = 0
+
+    menuList.addEventListener("click",(e) => {
+
+        const target = e.target
+        const liEle = target.closest("li")
+
+        const idx = liEle.getAttribute("data-idx")
+
+        console.log(idx)
+
+        const menu = menus[idx]
+
+        orders.push({...menu, qty: 1})
+
+        console.log(orders)
+
+        totalPrice += menus[idx].price
+
+        console.log(totalPrice)
+
+        str2 += `<li>
+            <div>
+            NAME : ${orders[idx].name}
+            PRICE : ${orders[idx].price}
+            QUANTITY : ${orders[idx].qty}
+            TOTAL PRICE :${totalPrice}
+            </div>
+        </li>`
+
+        orderList.innerHTML = str2
+    })
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
